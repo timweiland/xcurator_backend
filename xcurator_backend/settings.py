@@ -34,13 +34,20 @@ SECRET_KEY = "django-insecure-0l@2bu+lcp&nz=fwnta7-li(@##_0t(3be5ppghy5icc)2&_7f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ON_SERVER = env("ON_SERVER", default=True)
 
+ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_CREDENTIALS = True
+if ON_SERVER:
+    CORS_ORIGIN_REGEX_WHITELIST = env.list("CORS_ORIGIN_REGEX_WHITELIST", default=[])
+else:
+    CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
 INSTALLED_APPS = [
     "users",
+    "inventory",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     "django.contrib.admin",
@@ -49,11 +56,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
+    "corsheaders",
+    "mapwidgets",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
