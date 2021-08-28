@@ -1,4 +1,5 @@
 import datetime as dt
+import base64
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, status
@@ -11,6 +12,7 @@ from rest_framework_simplejwt.tokens import RefreshToken as RefreshTokenModel
 
 from users.serializers import RegisterSerializer, UserSerializer
 import users.token_serializers as token_serializers
+from users.tokens import account_activation_token
 
 UserModel = get_user_model()
 
@@ -68,6 +70,22 @@ class RegisterView(generics.CreateAPIView):
     model = get_user_model()
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
+
+
+class ActivateAccountView(APIView):
+    def patch(self, request, uidb64, token, format=None):
+        try:
+            uid = base64.urlsafe_b64decode(uidb64).decode()
+            user = UserModel.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            user = None
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.email_confirmed = True
+            user.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileView(generics.RetrieveAPIView):

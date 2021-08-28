@@ -164,3 +164,11 @@ SIMPLE_JWT = {
 JWT_COOKIE_NAME = env.str("JWT_COOKIE_NAME", default="refresh_token")
 JWT_COOKIE_SECURE = env.bool("JWT_COOKIE_SECURE", default=False)
 JWT_COOKIE_SAMESITE = env.str("JWT_COOKIE_SAMESITE", default="Lax")
+
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env.int("EMAIL_PORT")
+
+FRONTEND_BASE = env.str("FRONTEND_BASE", default="http://127.0.0.1:3000")

@@ -8,4 +8,5 @@ urlpatterns = [
     path("logout/", views.LogoutView.as_view()),
     path("refresh/", views.RefreshTokenView.as_view()),
     path("profile/", views.ProfileView.as_view()),
+    path("activate/<uidb64>/<token>/", views.ActivateAccountView.as_view()),
 ]

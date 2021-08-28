@@ -1,0 +1,6 @@
+{% autoescape off %}
+Hey {{ user.first_name }},
+thanks for your interest in the xCurator. To activate your account, please click this link:
+
+{{ frontend_base }}/activate?uidb64={{ uid }}&token={{ token }}
+{% endautoescape %}
