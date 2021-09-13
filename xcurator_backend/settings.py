@@ -29,7 +29,10 @@ if not IGNORE_DOT_ENV_FILE:
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-0l@2bu+lcp&nz=fwnta7-li(@##_0t(3be5ppghy5icc)2&_7f"
+SECRET_KEY = env.str(
+    "DJANGO_SECRET_KEY",
+    default="django-insecure-0l@2bu+lcp&nz=fwnta7-li(@##_0t(3be5ppghy5icc)2&_7f",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
