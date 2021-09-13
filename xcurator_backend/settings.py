@@ -172,3 +172,4 @@ EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = env.int("EMAIL_PORT")
 
 FRONTEND_BASE = env.str("FRONTEND_BASE", default="http://127.0.0.1:3000")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
