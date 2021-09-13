@@ -1,0 +1,35 @@
+#+TITLE: README
+* xCurator backend
+Welcome! This is the repository for the backend of the [[https://www.landesmuseum.de/museum/forschung-projekte/kuenstliche-intelligenz-museum][xCurator]].
+
+** Tech stack
+- General: [[https://www.djangoproject.com/][Django]], [[https://www.django-rest-framework.org/][DRF]]
+- Auth: [[https://github.com/jazzband/djangorestframework-simplejwt][djangorestframework-simplejwt]]
+- Database: SQLite
+  + Temporarily - it's just easier for development
+  + Eventually, we should switch to Postgres!
+
+** Requirements
+- Python 3
+- [[https://pypi.org/project/pip/][pip]]
+
+** Development
+- [[https://docs.python.org/3/library/venv.html][Create a virtual environment]] and activate it
+- Run =pip install -r requirements.txt= to install the dependencies
+- Run =python manage.py migrate= to create/update the DB
+- Run =python manage.py createsuperuser= to create an admin account
+- Run =python manage.py runserver= to start the server
+- Please use a code formatter before committing.
+  + I run [[https://github.com/psf/black][black]] automatically on each save
+    - TODO: We should add a pre-commit hook for this at some point
+
+** Importing data
+*** Baden State Museum data
+[[file:scripts/transform_to_unqualified_dc.ipynb][scripts/transform_to_unqualified_dc.ipynb]] can be used to transform data from the Baden State Museum to a .zip that contains
+ - a file called =dc.json= containing the museum object metadata
+ - a directory called =images= that contains the images associated with the objects
+
+This .zip can be imported into the backend using the command =python manage.py import_dc --zip-path <zip_path>=
+
+** Questions & Problems
+In case you encounter any problems or you have any questions, please raise an issue here on Github.
