@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from rest_framework import serializers
+from django.contrib.gis.geos import Point
 from inventory.models import (
     MuseumObject,
     Collection,
@@ -84,8 +85,20 @@ class ObjectLocationTypeSerializer(serializers.ModelSerializer):
         fields = ["name"]
 
 
+class CustomPointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Point
+        fields = ["x", "y", "srid"]
+
+    def to_representation(self, value):
+        value.transform(4326)
+        lon, lat = (value.x, value.y)
+        return {"lon": lon, "lat": lat}
+
+
 class ObjectLocationSerializer(serializers.ModelSerializer):
     location_type = ObjectLocationTypeSerializer(read_only=True)
+    location = CustomPointSerializer()
 
     class Meta:
         model = ObjectLocation
