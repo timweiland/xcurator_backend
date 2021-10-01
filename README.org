@@ -16,6 +16,7 @@ Welcome! This is the repository for the backend of the [[https://www.landesmuseu
 ** Development
 - [[https://docs.python.org/3/library/venv.html][Create a virtual environment]] and activate it
 - Run =pip install -r requirements.txt= to install the dependencies
+  + On Debian/Ubuntu, you are advised to install the following packages which will install, directly or by dependency, the required geospatial libraries for the       GeoDjango framework: =$ sudo apt-get install binutils libproj-dev gdal-bin=
 - Copy =.env.dev.example= to =.env=, change values as you see fit
 - Run =python manage.py migrate= to create/update the DB
 - Run =python manage.py createsuperuser= to create an admin account
